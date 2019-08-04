@@ -13,53 +13,68 @@ retry:
 	return
 }
 
-func main() {
-inputRange:
+func inputRange() (from, to int) {
+retry:
 	fmt.Print("Input the range of the secret number first. From= ")
-	from := inputOneNumber()
+	from = inputOneNumber()
 	fmt.Print("To= ")
-	to := inputOneNumber()
+	to = inputOneNumber()
 
 	if from >= to {
-		fmt.Printf("Invalid range [%d,%d)", from, to)
-		goto inputRange
+		fmt.Printf("Invalid range [%d,%d).\n", from, to)
+		goto retry
 	}
+	return
+}
 
-	fmt.Printf("The secret number will be in range [%d,%d).\n", from, to)
+func generateSecretNumber(from, to int) int {
+	fmt.Printf("Secret number will be generated in range [%d,%d).\n", from, to)
+	return rand.Intn(to-from) + from
+}
 
-	num := rand.Intn(to-from) + from
-
-	func() {
-		for {
-			fmt.Print("Guess what the number is: ")
-			guess := inputOneNumber()
-			switch {
-			case guess > num:
-				fmt.Printf("%d is too big\n", guess)
-			case guess < num:
-				fmt.Printf("%d is too small\n", guess)
-			case guess == num:
-				fmt.Printf("Congratulation! %d is the secret number\n", guess)
-				return
-			}
+func guessNumber(num int) {
+	for {
+		fmt.Print("Guess what the number is: ")
+		guess := inputOneNumber()
+		switch {
+		case guess > num:
+			fmt.Printf("%d is too big.\n", guess)
+		case guess < num:
+			fmt.Printf("%d is too small.\n", guess)
+		case guess == num:
+			fmt.Printf("Congratulation! %d is the secret number\n", guess)
+			return
 		}
-	}()
+	}
+}
 
-toContinueOrNot:
+func toContinue() bool {
+retry:
 	fmt.Print("Do you want to continue? [y/n] ")
 	var res string
 	if _, err := fmt.Scanf("%s\n", &res); err != nil {
 		fmt.Println("Please input y or n.")
-		goto toContinueOrNot
+		goto retry
 	}
 	switch res {
 	case "y":
-		goto inputRange
+		return true
 	case "n":
-		return
+		return false
 	default:
 		fmt.Println("Please input y or n.")
-		goto toContinueOrNot
+		goto retry
 	}
+}
 
+func main() {
+	for {
+		from, to := inputRange()
+		fmt.Printf("The secret number will be in range [%d,%d).\n", from, to)
+		secretNumber := generateSecretNumber(from, to)
+		guessNumber(secretNumber)
+		if !toContinue() {
+			return
+		}
+	}
 }
