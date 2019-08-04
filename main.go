@@ -48,9 +48,9 @@ func guessNumber(num int) {
 	}
 }
 
-func toContinue() bool {
+func toPlayAgain() bool {
 retry:
-	fmt.Print("Do you want to continue? [y/n] ")
+	fmt.Print("Do you want to play again? [y/n] ")
 	var res string
 	if _, err := fmt.Scanf("%s\n", &res); err != nil {
 		fmt.Println("Please input y or n.")
@@ -73,7 +73,7 @@ func main() {
 		fmt.Printf("The secret number will be in range [%d,%d).\n", from, to)
 		secretNumber := generateSecretNumber(from, to)
 		guessNumber(secretNumber)
-		if !toContinue() {
+		if !toPlayAgain() {
 			return
 		}
 	}
