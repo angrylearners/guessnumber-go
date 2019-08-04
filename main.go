@@ -68,12 +68,14 @@ retry:
 }
 
 func main() {
+	fmt.Println("Welcome to number guessing game.")
 	for {
 		from, to := inputRange()
 		fmt.Printf("The secret number will be in range [%d,%d).\n", from, to)
 		secretNumber := generateSecretNumber(from, to)
 		guessNumber(secretNumber)
 		if !toPlayAgain() {
+			fmt.Println("Goodbye.")
 			return
 		}
 	}
