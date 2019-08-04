@@ -11,7 +11,8 @@ An alternative implementation of number guessing game, in go.
 > to see the difference between the inputted number and the randomly generated numbers, 
 > and to then compare the numbers.
 
-## How to play
+## How to Play
+
 Compile the program with:
 ```shell script
 go get github.com/angrylearners/guessnumber-go
@@ -33,3 +34,7 @@ Congratulation! 81 is the secret number
 Do you want to play again? [y/n] n
 Goodbye.
 ```
+
+## License
+
+MIT. View [LICENSE](LICENSE) file for more details.
